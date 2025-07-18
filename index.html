@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APSC Quiz - 100 Questions</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      text-align: center;
+    }
+    .quiz-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .question {
+      margin-bottom: 15px;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    #result {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>APSC 100 Questions Quiz</h1>
+    <form id="quizForm">
+      <!-- Questions will be injected here by JavaScript -->
+      <div id="questions"></div>
+      <button type="submit">Submit</button>
+    </form>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const questions = [
+      { q: "Which Article of the Indian Constitution provides the right to freedom of religion?", options: ["Article 25", "Article 19", "Article 17"], answer: 0 },
+      { q: "The President of India appoints the Finance Commission under which constitutional provision?", options: ["Article 280", "Article 312", "Article 265"], answer: 0 },
+      { q: "The first significant rebellion against British rule in India is known as:", options: ["Swadeshi Movement", "Revolt of 1857", "Non‑Cooperation Movement"], answer: 1 },
+      // ... Add all remaining 97 questions similarly
+    ];
+
+    const quizContainer = document.getElementById("questions");
+    questions.forEach((q, index) => {
+      const qDiv = document.createElement("div");
+      qDiv.classList.add("question");
+      qDiv.innerHTML = `<p><strong>Q${index + 1}.</strong> ${q.q}</p>`;
+
+      const optionsHTML = q.options.map((opt, i) =>
+        `<label><input type="radio" name="q${index}" value="${i}"> ${opt}</label>`
+      ).join("");
+
+      const optionsDiv = document.createElement("div");
+      optionsDiv.classList.add("options");
+      optionsDiv.innerHTML = optionsHTML;
+
+      qDiv.appendChild(optionsDiv);
+      quizContainer.appendChild(qDiv);
+    });
+
+    document.getElementById("quizForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      let score = 0;
+      questions.forEach((q, index) => {
+        const selected = document.querySelector(`input[name=q${index}]:checked`);
+        if (selected && parseInt(selected.value) === q.answer) {
+          score += 1;
+        }
+      });
+      document.getElementById("result").textContent = `You scored ${score} out of ${questions.length}`;
+    });
+  </script>
+</body>
+</html>
